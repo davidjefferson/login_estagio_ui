@@ -164,23 +164,33 @@ form.addEventListener('submit', (evente) => {
 })
 // mascara cpf, telefone, cnpj e cep usando jquery
 $(document).ready(function () {
-    $("#cep").mask('00.000-000', { placeholder: '__.___-___' });
-    $("#tele").mask('(00)0000-0000', { placeholder: '(__)_____-____' });
-    $("#cpf").mask('000.000.000-00', { placeholder: '___.___.___-__' });
-    $("#cnpj").mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' })
-    $("#data").mask('00/00/0000', { placeholder: ' ___/__/____   📅' })
+    $("#cep").mask('00.000-000', {
+        placeholder: '__.___-___'
+    });
+    $("#tele").mask('(00)0000-0000', {
+        placeholder: '(__)_____-____'
+    });
+    $("#cpf").mask('000.000.000-00', {
+        placeholder: '___.___.___-__'
+    });
+    $("#cnpj").mask('00.000.000/0000-00', {
+        placeholder: '__.___.___/____-__'
+    })
+    $("#data").mask('00/00/0000', {
+        placeholder: ' ___/__/____   📅'
+    })
 })
 
 
 
 // validador do cpf/ termos / cnpj jquery  
 $(document).ready(function () {
-    
-    $.validator.addMethod('strongPassword', function(value, element){
-        return this.optional(element)
-        || value.length >=6
-        && /\d/.test(value)
-        && /[a-z]/i.test(value);
+
+    $.validator.addMethod('strongPassword', function (value, element) {
+        return this.optional(element) ||
+            value.length >= 6 &&
+            /\d/.test(value) &&
+            /[a-z]/i.test(value);
     }, "Sua senha deve conter ao menos 6 digitos sendo ao menos um numero e uma letra\.")
 
     $("#form").validate({
@@ -227,8 +237,8 @@ $(document).ready(function () {
                 required: true,
             },
             data: {
-                required: true, 
-                dateNL: true,     
+                required: true,
+                dateNL: true,
             },
             logradouro: {
                 required: true,
@@ -284,6 +294,13 @@ $(document).ready(function () {
             data: {
                 required: "Este campo é obrigatório!",
             },
+        },
+        errorPlacement: function (error, element) {
+            if (element.is(":radio")) {
+                error.appendTo(element.parents('.input-group'));
+            } else { // This is the default behavior 
+                error.insertAfter(element);
+            }
         }
     })
 })
